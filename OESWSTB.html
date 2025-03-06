@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Examination with Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .timer {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question label {
+            display: block;
+            margin: 5px 0;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+        .correct {
+            color: green;
+        }
+        .wrong {
+            color: red;
+        }
+        .disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CBCC Security Online Examination</h1>
+
+        <!-- Timer -->
+        <div class="timer" id="timer">Time Left: <span id="time">00:00</span></div>
+
+        <!-- Start Timer Button -->
+        <button id="startTimerBtn" onclick="startTimer()">Start Timer</button>
+
+        <!-- Question 1 -->
+        <div class="question">
+            <p><strong>1. To take charge of the post and all company properties in view and to _________ the same with utmost diligence?</strong></p>
+            <label><input type="radio" name="q1" value="a"> a) protect</label>
+            <label><input type="radio" name="q1" value="b"> b) maintain</label>
+            <label><input type="radio" name="q1" value="c"> c) assume</label>
+            <label><input type="radio" name="q1" value="d"> d) protect/preserve</label>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="question">
+            <p><strong>2. What is the emergency number of RED CROSS?</strong></p>
+            <label><input type="radio" name="q2" value="a"> a) 161</label>
+            <label><input type="radio" name="q2" value="b"> b) 166</label>
+            <label><input type="radio" name="q2" value="c"> c) 254-0200</label>
+            <label><input type="radio" name="q2" value="d"> d) 253-4611</label>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="question">
+            <p><strong>3. what is the complate name of CBCC1 CCTV-Operator for today?</strong></p>
+            <label><input type="radio" name="q3" value="a"> a) Editho Aque</label>
+            <label><input type="radio" name="q3" value="b"> b) Paica Rey</label>
+            <label><input type="radio" name="q3" value="c"> c) Ram G</label>
+            <label><input type="radio" name="q3" value="d"> d) Anog Jeson</label>
+        </div>
+
+        <!-- Submit Button -->
+        <button id="submitBtn" class="disabled" onclick="submitExam()">Submit Exam</button>
+
+        <!-- Result Section -->
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        // Timer variables
+        let timeLeft = 60; // Time in seconds (e.g., 60 seconds = 1 minute)
+        let timerInterval;
+
+        // Function to start the timer
+        function startTimer() {
+            // Disable the Start Timer button
+            document.getElementById('startTimerBtn').classList.add('disabled');
+
+            // Enable the Submit Exam button
+            document.getElementById('submitBtn').classList.remove('disabled');
+
+            // Start the countdown
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('time').innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitExam(); // Automatically submit when time runs out
+                }
+                timeLeft--;
+            }, 1000);
+        }
+
+        // Submit Exam Function
+        function submitExam() {
+            // Stop the timer
+            clearInterval(timerInterval);
+
+            // Define correct answers
+            const correctAnswers = {
+                q1: 'd', // Correct answer for question 1
+                q2: 'd', // Correct answer for question 2
+                q3: 'c'  // Correct answer for question 3
+            };
+
+            let score = 0;
+
+            // Loop through each question and check the selected answer
+            for (const [question, correctAnswer] of Object.entries(correctAnswers)) {
+                const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
+                if (selectedAnswer && selectedAnswer.value === correctAnswer) {
+                    score++; // Increment score if the answer is correct
+                }
+            }
+
+            // Display the result
+            const totalQuestions = Object.keys(correctAnswers).length;
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <p>You scored <span class="correct">${score}</span> out of ${totalQuestions}.</p>
+                <p>${score === totalQuestions ? 'congrats doy!' : 'bagsak!'}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
