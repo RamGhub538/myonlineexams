@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Examination</title>
+</head>
+<body>
+    <h1>Online Examination</h1>
+
+    <form action="/submit-exam" method="POST">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <!-- Question 1 -->
+        <p><strong>1. What is the capital of France?</strong></p>
+        <label><input type="radio" name="q1" value="a"> a) Berlin</label><br>
+        <label><input type="radio" name="q1" value="b"> b) Madrid</label><br>
+        <label><input type="radio" name="q1" value="c"> c) Paris</label><br>
+        <label><input type="radio" name="q1" value="d"> d) Rome</label><br><br>
+
+        <!-- Question 2 -->
+        <p><strong>2. Which planet is known as the Red Planet?</strong></p>
+        <label><input type="radio" name="q2" value="a"> a) Earth</label><br>
+        <label><input type="radio" name="q2" value="b"> b) Mars</label><br>
+        <label><input type="radio" name="q2" value="c"> c) Jupiter</label><br>
+        <label><input type="radio" name="q2" value="d"> d) Venus</label><br><br>
+
+        <!-- Question 3 -->
+        <p><strong>3. Who wrote "Hamlet"?</strong></p>
+        <label><input type="radio" name="q3" value="a"> a) Charles Dickens</label><br>
+        <label><input type="radio" name="q3" value="b"> b) William Shakespeare</label><br>
+        <label><input type="radio" name="q3" value="c"> c) Mark Twain</label><br>
+        <label><input type="radio" name="q3" value="d"> d) Jane Austen</label><br><br>
+
+        <button type="submit">Submit Exam</button>
+    </form>
+</body>
+</html>
